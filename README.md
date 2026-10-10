@@ -4,11 +4,10 @@
 
 ## 功能
 
-- **價格試算**：選接機或送機、機場、地區、車型，即時顯示價格
-- **價目表**：依機場與車型切換，點地區名稱可帶入試算
-- **預約表單**：填完後自動組成預約訊息，一鍵傳到 LINE 或複製
-- **手機優先**：手機版有固定在畫面下方的電話、LINE、WhatsApp 按鈕
-- **SEO**：獨立的 title / description、JSON-LD 結構化資料、`sitemap.xml`、`robots.txt`
+- **首頁**：登機證樣式的價格試算（接機或送機、機場、地區、車型）、三個機場入口、車型一覽、聯絡方式
+- **機場頁**（桃園 `tpe.html`、松山 `tsa.html`、清泉崗 `rmq.html`）：航班資訊看板風格的價目表，選了地區後底部出現預約列，一鍵用 LINE 預約
+- **手機優先**：手機版價格固定在畫面底部，底部另有電話、LINE、WhatsApp 快速聯絡列
+- **SEO**：每頁獨立的 title / description / canonical、JSON-LD 結構化資料、自動產生的 `sitemap.xml`
 - **無障礙**：鍵盤可操作、有焦點外框、支援「減少動態效果」設定
 
 ## 在本機執行
@@ -20,22 +19,54 @@ python3 -m http.server 8000
 # 瀏覽器開啟 http://localhost:8000
 ```
 
+Windows 的 PowerShell 請用 `python -m http.server 8000`。
+
+## 建置（修改頁面或導覽時需要）
+
+頁面是由 `src/` 的範本組裝出來的，共用的頁首、頁尾只寫一份：
+
+```bash
+python build.py
+```
+
+只用 Python 標準函式庫，不用安裝任何套件。**產生出來的 `.html` 檔要一起 commit**，GitHub Pages 才有東西可以顯示。
+
+- 改價格：只改 `data/prices.json`，不需要重新建置
+- 改導覽列、新增機場頁：改 `build.py` 最上面的 `AIRPORTS`、`NAV`，再執行 `python build.py`
+- 改頁首、頁尾：改 `src/partials/`，再執行 `python build.py`
+- 改頁面內容：改 `src/pages/`，再執行 `python build.py`
+
 ## 專案結構
 
 ```
 .
-├── index.html
-├── css/style.css
+├── build.py              # 建置腳本
+├── src/
+│   ├── partials/         # 共用的 head、頁首、頁尾
+│   └── pages/            # 頁面範本（index、airport）
+├── index.html            # 以下 4 個是建置產生的
+├── tpe.html  tsa.html  rmq.html
+├── sitemap.xml           # 建置時一併產生
+├── all.html              # 舊的單頁完整版（暫時保留，不被搜尋引擎收錄）
+├── css/
+│   ├── style.css         # 基本樣式
+│   └── airport.css       # 機場風樣式（新版頁面）
 ├── js/
-│   ├── config.js      # 店名、電話、LINE、地址
-│   └── app.js         # 試算、價目表、預約訊息
-├── data/prices.json   # 所有價格（機場、車型、地區、備註、Alphard）
-├── data/fleet.json    # 車隊照片與規格
-├── images/            # 車型照片（webp）與 Logo
+│   ├── config.js         # 店名、電話、LINE、地址
+│   ├── site.js           # 新版頁面共用
+│   ├── home.js           # 首頁
+│   ├── airport.js        # 機場頁
+│   └── app.js            # 只給 all.html 用
+├── data/prices.json      # 所有價格（機場、車型、地區、備註、Alphard）
+├── data/fleet.json       # 車隊照片與規格（all.html 使用）
+├── images/               # 車型照片（webp）與 Logo
 ├── favicon.svg
-├── robots.txt
-└── sitemap.xml
+└── robots.txt
 ```
+
+## 還沒拆成獨立頁面的部分
+
+車隊、服務須知、預約、司機招募目前還在 `all.html`，導覽列暫時連到那裡的對應區塊。拆成獨立頁面後，在 `build.py` 的 `NAV` 把連結改成新頁面即可。
 
 ## 目前的資料狀態
 
@@ -55,7 +86,7 @@ python3 -m http.server 8000
 - [ ] **車型載客與行李數**不一致：官網車型說明為轎車 4 人 2 件、休旅 4 人 4 件、九人座 8 人 8 件；價目圖為 3 人 2 件、4 人 3 件、7 人 7 件。目前採用官網車型說明
 - [ ] 預約專線（0900-043-688）與老闆電話（0956-602-888）哪一支為主要號碼
 - [ ] 價格選項上的車型照片對應：轎車 Camry、休旅 bZ4X、九人座商務車 Staria、賓士 V-Class，可在 `data/prices.json` 的 `image` 修改
-- [ ] 網址目前設為 `https://yiqing-17.github.io/`，若更換網址，需修改 `index.html` 的 canonical、og:url、JSON-LD，以及 `robots.txt`、`sitemap.xml`
+- [ ] 網址目前設為 `https://yiqing-17.github.io/`，若更換網址，修改 `build.py` 的 `SITE_URL` 和 `robots.txt` 的 Sitemap 網址，再執行 `python build.py`
 
 ### 修改價格
 

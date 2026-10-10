@@ -22,8 +22,10 @@
   function applySiteInfo() {
     const digits = (SITE.phone || '').replace(/\D/g, '');
     const intl = digits.startsWith('0') ? '886' + digits.slice(1) : digits;
+    const toIntl = n => { const d = (n || '').replace(/\D/g, ''); return d.startsWith('0') ? '886' + d.slice(1) : d; };
     const links = {
       phone: `tel:+${intl}`,
+      ownerPhone: `tel:+${toIntl(SITE.ownerPhone)}`,
       line: `https://line.me/R/ti/p/${encodeURIComponent(SITE.lineId || '')}`,
       whatsapp: `https://wa.me/${intl}`,
       map: `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(SITE.address || '')}`,
@@ -100,6 +102,11 @@
     areaSel.value = currentArea().name;
     state.areaName = areaSel.value;
 
+    // 下拉選單放不下長地區名時，在下方顯示完整名稱
+    const note = $('#area-full');
+    note.textContent = state.areaName;
+    note.hidden = state.areaName.length <= 12;
+
     // 送機 / 接機、車型
     $$('input[name="dir"]').forEach(r => { r.checked = r.value === state.dir; });
     $$('input[name="vehicle"]').forEach(r => { r.checked = r.value === state.vehicleId; });
@@ -109,7 +116,7 @@
     $('#vehicle-chips').innerHTML = data.vehicles.map(v => `
       <label>
         <input type="radio" name="vehicle" value="${v.id}">
-        <span>${v.name}<small>${v.seats}</small></span>
+        <span>${v.image ? `<img src="${v.image}" alt="" loading="lazy">` : ''}${v.name}<small>${v.seats}</small></span>
       </label>`).join('');
   }
 
@@ -148,8 +155,8 @@
       ${g.areas.map(area => `
         <tr class="${area.name === selected ? 'is-selected' : ''}">
           <td><button type="button" class="row-pick" data-area="${area.name}">${area.name}</button></td>
-          <td class="num">${fmt(priceFor(area, state.vehicleId, 'send'))}</td>
-          <td class="num">${fmt(priceFor(area, state.vehicleId, 'pickup'))}</td>
+          <td class="num" data-label="送機">${fmt(priceFor(area, state.vehicleId, 'send'))}</td>
+          <td class="num" data-label="接機">${fmt(priceFor(area, state.vehicleId, 'pickup'))}</td>
         </tr>`).join('')}
     `).join('');
   }
@@ -166,11 +173,40 @@
     $('#preview').value = buildMessage(true);
   }
 
+  function renderPremium() {
+    const box = $('#premium');
+    const p = airport().premium;
+    box.hidden = !p;
+    if (!p) return;
+    $('#premium-title').textContent = p.name;
+    $('#premium-caption').textContent = p.caption;
+    $('#premium-body').innerHTML = p.rows.map(([name, price]) =>
+      `<tr><td>${name}</td><td class="num">${fmt(price)}</td></tr>`).join('');
+  }
+
+  function renderNotes() {
+    const notes = [...(data.notes || []), ...(airport().notes || [])];
+    $('#notes').innerHTML = notes.map(n => `<li>${n}</li>`).join('');
+  }
+
+  function renderFleet(fleet) {
+    $('#fleet-grid').innerHTML = fleet.map(f => `
+      <article class="fleet-item">
+        <img src="${f.image}" alt="${f.model}" width="800" height="436" loading="lazy">
+        <h3>${f.name}</h3>
+        <p class="model">${f.model}</p>
+        <p class="spec">最多 ${f.passengers} 人，行李 ${f.luggage}</p>
+        ${f.use ? `<p class="use">${f.use}</p>` : ''}
+      </article>`).join('');
+  }
+
   function renderAll() {
     renderEstimatorControls();
     renderPrice();
     renderTableControls();
     renderTable();
+    renderPremium();
+    renderNotes();
     renderBooking();
   }
 
@@ -257,11 +293,24 @@
       const [y, m] = data.updated.split('-');
       $('#price-updated').textContent = ` 價格更新：${y} 年 ${Number(m)} 月。`;
     }
-    $('#notes').innerHTML = (data.notes || []).map(n => `<li>${n}</li>`).join('');
+
+    // 只有一個機場時，不需要顯示機場選項
+    if (data.airports.length === 1) {
+      $('#airport').closest('.field').hidden = true;
+      $('#airport-tabs').hidden = true;
+    }
 
     renderVehicleChips();
     bindEvents();
     renderAll();
+
+    // 車隊（失敗也不影響價格功能）
+    try {
+      const res = await fetch('data/fleet.json');
+      if (res.ok) renderFleet(await res.json());
+    } catch (err) {
+      console.warn('無法載入 data/fleet.json', err);
+    }
   }
 
   init();
