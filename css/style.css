@@ -253,6 +253,23 @@ select:hover, input:hover, textarea:hover { border-color: #AEB3C6; }
   .form { grid-template-columns: 1fr 1fr; }
 }
 
+/* ===== Recruit ===== */
+.recruit-grid { display: grid; gap: 2rem; }
+.recruit-offer { margin-top: .75rem; font-size: clamp(1.4rem, 4vw, 1.9rem); font-weight: 700; color: var(--taxi); line-height: 1.35; }
+.recruit-cta { margin-top: 1.5rem; display: flex; flex-wrap: wrap; gap: .75rem; }
+.btn-outline-light { background: transparent; color: var(--white); border-color: rgba(255,255,255,.7); }
+.btn-outline-light:hover { background: rgba(255,255,255,.1); }
+.recruit-lists { display: grid; gap: 1.5rem; }
+.recruit h3 { font-size: 1.1rem; margin-bottom: .5rem; }
+.checks { display: grid; gap: .5rem; }
+.checks li { position: relative; padding-left: 1.6rem; color: rgba(255,255,255,.9); }
+.checks li::before { content: ""; position: absolute; left: .3rem; top: .45em; width: .4rem; height: .75rem; border: solid var(--taxi); border-width: 0 2.5px 2.5px 0; transform: rotate(45deg); }
+.services dd a { color: var(--navy); font-weight: 500; text-underline-offset: 4px; }
+@media (min-width: 800px) {
+  .recruit-grid { grid-template-columns: 1fr 1.2fr; gap: 3.5rem; align-items: start; }
+  .recruit-lists { grid-template-columns: 1fr 1fr; }
+}
+
 /* ===== Contact ===== */
 .contact-list { margin-top: 1.5rem; display: grid; gap: .75rem; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
 .contact-item { display: grid; gap: .1rem; padding: 1rem 1.25rem; text-decoration: none; background: var(--paper); border-radius: 12px; border: 1.5px solid transparent; }
