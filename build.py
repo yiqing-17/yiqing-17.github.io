@@ -100,6 +100,24 @@ def gate_html(a, prices):
     )
 
 
+def check_routes(prices):
+    """路線圖（data/routes.json）的每個站點都要對得上價目表裡的地區，否則停止建置。"""
+    routes = json.loads(read(ROOT / "data" / "routes.json"))
+    errors = []
+    for airport_id, route in routes.items():
+        if airport_id not in prices:
+            errors.append(f"routes.json 有未知的機場：{airport_id}")
+            continue
+        names = {a["name"] for g in prices[airport_id]["groups"] for a in g["areas"]}
+        for line in route["lines"]:
+            for stop in line["stops"]:
+                if stop["area"] not in names:
+                    errors.append(f"{airport_id} 路線「{line['name']}」的站點「{stop['label']}」"
+                                  f"找不到對應地區：{stop['area']}")
+    if errors:
+        raise SystemExit("路線圖設定有誤：\n  " + "\n  ".join(errors))
+
+
 # ---------------------------------------------------------------- 主程式 ----
 
 
@@ -110,9 +128,12 @@ def main():
     if missing:
         raise SystemExit(f"prices.json 裡找不到這些機場：{missing}")
 
+    check_routes(prices)
+
     base = dict(
         site_url=SITE_URL,
         href_fleet=dict(NAV)["車隊"],
+        href_terms=dict(NAV)["服務須知"],
         min_price=f"{min_price(prices[AIRPORTS[0]['id']]):,}",
         gates="\n".join(gate_html(a, prices) for a in AIRPORTS),
     )

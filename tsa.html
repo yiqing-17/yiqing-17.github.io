@@ -44,6 +44,7 @@
     <div>
       <h1>松山機場接送價目表</h1>
       <p class="lede">松山機場送機與接機單趟報價，接機價為送機價加 100 元。</p>
+      <p class="night-note" id="night-note" hidden></p>
     </div>
   </div>
 </section>
@@ -56,15 +57,37 @@
           <p class="board-label" id="veh-label">車型</p>
           <div class="gate-tabs" id="vehicle-tabs" role="group" aria-labelledby="veh-label"></div>
         </div>
-        <p class="board-hint">點選地區，畫面下方會出現預約按鈕；再點一次可取消。</p>
-        <div class="board-scroll">
-          <table class="board-table">
-            <caption class="sr" id="board-caption"></caption>
-            <thead>
-              <tr><th scope="col">目的地</th><th scope="col" class="num">送機</th><th scope="col" class="num">接機</th></tr>
-            </thead>
-            <tbody id="board-body"></tbody>
-          </table>
+        <div class="view-tabs" id="view-tabs" role="group" aria-label="顯示方式">
+          <button type="button" data-view="map" aria-pressed="true">路線圖</button>
+          <button type="button" data-view="table" aria-pressed="false">完整價目表</button>
+        </div>
+
+        <div id="view-map">
+          <div class="map-head">
+            <p class="board-hint">點選站點，畫面下方會出現預約按鈕；再點一次可取消。</p>
+            <div class="seg dir-toggle" role="radiogroup" aria-label="送機或接機">
+              <label><input type="radio" name="mapdir" value="send" checked><span><span class="lbl"><svg class="plane plane-up" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M1.5 7H4l2-5h1.6L6.9 7H11c1.5 0 3.5.4 3.5 1s-2 1-3.5 1H6.9l.7 5H6L4 9H1.5z"/></svg>送機</span><small>Departure</small></span></label>
+              <label><input type="radio" name="mapdir" value="pickup"><span><span class="lbl"><svg class="plane plane-down" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M1.5 7H4l2-5h1.6L6.9 7H11c1.5 0 3.5.4 3.5 1s-2 1-3.5 1H6.9l.7 5H6L4 9H1.5z"/></svg>接機</span><small>Arrival</small></span></label>
+            </div>
+          </div>
+          <div class="route-grid" id="route-grid"></div>
+        </div>
+
+        <div id="view-table" hidden>
+          <p class="board-hint">點選地區，畫面下方會出現預約按鈕；再點一次可取消。</p>
+          <div class="board-scroll">
+            <table class="board-table">
+              <caption class="sr" id="board-caption"></caption>
+              <thead>
+                <tr>
+                  <th scope="col">目的地</th>
+                  <th scope="col" class="num"><span class="dir"><span class="lbl"><svg class="plane plane-up" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M1.5 7H4l2-5h1.6L6.9 7H11c1.5 0 3.5.4 3.5 1s-2 1-3.5 1H6.9l.7 5H6L4 9H1.5z"/></svg>送機</span><small>Departure</small></span></th>
+                  <th scope="col" class="num"><span class="dir"><span class="lbl"><svg class="plane plane-down" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M1.5 7H4l2-5h1.6L6.9 7H11c1.5 0 3.5.4 3.5 1s-2 1-3.5 1H6.9l.7 5H6L4 9H1.5z"/></svg>接機</span><small>Arrival</small></span></th>
+                </tr>
+              </thead>
+              <tbody id="board-body"></tbody>
+            </table>
+          </div>
         </div>
         <p class="error js-error" role="alert" hidden>
           無法載入價目資料。請用本機伺服器開啟網站（做法在 README），不要直接點兩下開啟檔案。

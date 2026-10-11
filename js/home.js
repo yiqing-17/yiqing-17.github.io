@@ -1,7 +1,7 @@
 // 首頁：價格試算（登機證）與車型一覽
 (async () => {
   'use strict';
-  const { $, $$, fmt, money, DIR, areasOf, lineMessageUrl, reduceMotion, ready } = window.Huanyu;
+  const { $, $$, fmt, money, DIR, areasOf, lineMessageUrl, capacityHtml, reduceMotion, ready } = window.Huanyu;
   const data = await ready;
   if (!data) return;
 
@@ -31,7 +31,7 @@
     $('#vehicle-chips').innerHTML = data.vehicles.map(v => `
       <label>
         <input type="radio" name="vehicle" value="${v.id}">
-        <span>${v.image ? `<img src="${v.image}" alt="" loading="lazy">` : ''}${v.name}<small>${v.seats}</small></span>
+        <span>${v.image ? `<img src="${v.image}" alt="" loading="lazy">` : ''}${v.name}${capacityHtml(v)}</span>
       </label>`).join('');
   }
 
@@ -77,7 +77,7 @@
       <article class="fleet-item">
         ${v.image ? `<img src="${v.image}" alt="${v.name}" width="800" height="436" loading="lazy">` : ''}
         <h3>${v.name}</h3>
-        <p class="spec">${v.seats}</p>
+        ${capacityHtml(v)}
       </article>`).join('');
   }
 

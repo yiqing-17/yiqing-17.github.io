@@ -157,7 +157,7 @@ select:hover, input:hover, textarea:hover { border-color: #AEB3C6; }
 .chips { display: grid; gap: .5rem; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); }
 .chips label { position: relative; display: block; }
 .chips input { position: absolute; opacity: 0; inset: 0; cursor: pointer; }
-.chips span {
+.chips label > span {
   display: flex; flex-direction: column; height: 100%;
   padding: .55rem .8rem; font-weight: 500; line-height: 1.35;
   border: 1.5px solid var(--line); border-radius: 10px; background: var(--white);

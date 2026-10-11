@@ -9,25 +9,33 @@
       "id": "sedan",
       "name": "國產五人座轎車",
       "seats": "最多 4 人，28 吋行李 2 件",
-      "image": "images/camry.webp"
+      "image": "images/camry.webp",
+      "passengers": 4,
+      "luggage": 2
     },
     {
       "id": "suv",
       "name": "國產五人座休旅車",
       "seats": "最多 4 人，28 吋行李 4 件",
-      "image": "images/bz4x.webp"
+      "image": "images/bz4x.webp",
+      "passengers": 4,
+      "luggage": 4
     },
     {
       "id": "van",
       "name": "國產九人座商務車",
       "seats": "最多 8 人，28 吋行李 8 件",
-      "image": "images/staria.webp"
+      "image": "images/staria.webp",
+      "passengers": 8,
+      "luggage": 8
     },
     {
       "id": "benz",
       "name": "進口賓士九人座商務車",
       "seats": "最多 8 人，28 吋行李 8 件",
-      "image": "images/v-class.webp"
+      "image": "images/v-class.webp",
+      "passengers": 8,
+      "luggage": 8
     }
   ],
   "airports": [

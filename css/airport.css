@@ -72,7 +72,7 @@
 .board-table { width: 100%; border-collapse: collapse; }
 .board-table th, .board-table td { padding: .55rem .5rem; text-align: left; border-bottom: 1px solid rgba(255,255,255,.12); }
 .board-table thead th { font-size: .85rem; font-weight: 500; color: rgba(255,255,255,.65); }
-.board-table .num { width: 7.5rem; text-align: right; font-family: var(--num); font-weight: 600; font-size: 1.75rem; line-height: 1.3; color: var(--taxi); font-variant-numeric: tabular-nums; white-space: nowrap; }
+.board-table .num { width: 8.25rem; text-align: right; font-family: var(--num); font-weight: 600; font-size: 1.75rem; line-height: 1.3; color: var(--taxi); font-variant-numeric: tabular-nums; white-space: nowrap; }
 .board-table thead .num { font-family: var(--sans); font-size: .85rem; font-weight: 500; color: rgba(255,255,255,.65); }
 .board-table tr.group th { padding-top: 1.25rem; font-size: .95rem; font-weight: 700; color: var(--taxi); border-bottom-color: rgba(255,199,44,.5); }
 .board-table .row-pick {
@@ -140,3 +140,123 @@ body.has-quote-bar { padding-bottom: calc(60px + 200px + env(safe-area-inset-bot
   .qb-price b { font-size: 2.75rem; }
   body.has-quote-bar { padding-bottom: calc(96px + env(safe-area-inset-bottom, 0px)); }
 }
+
+/* =========================================================================
+   以下是第二批：座位行李圖示、起降圖示、路線圖、服務原則看板、夜間天空
+   ========================================================================= */
+
+/* ===== 座位與行李圖示 ===== */
+.cap { display: grid; gap: .15rem; margin-top: .3rem; color: var(--muted); }
+.cap-row { display: flex; flex-wrap: wrap; gap: 2px; line-height: 0; }
+.cap-icon { width: 14px; height: 14px; fill: currentColor; flex: none; }
+.cap-bags .cap-icon { opacity: .6; }
+.fleet-item .cap { margin-top: .35rem; }
+.gate-tabs .cap { color: rgba(255,255,255,.78); }
+.gate-tabs button[aria-pressed="true"] .cap { color: rgba(11,19,64,.82); }
+
+/* ===== 起降圖示：送機 Departure、接機 Arrival ===== */
+.lbl { display: inline-flex; align-items: center; }
+.plane { width: 15px; height: 15px; fill: currentColor; flex: none; vertical-align: -2px; margin-right: .3rem; }
+.plane-up { transform: rotate(-40deg); }
+.plane-down { transform: rotate(40deg); }
+.seg label > span small { display: block; }
+.dir { display: inline-flex; flex-direction: column; align-items: flex-end; line-height: 1.25; }
+.dir small { font-size: .72rem; font-weight: 400; letter-spacing: .04em; }
+.board-table thead .num .dir small { font-family: var(--sans); color: rgba(255,255,255,.55); }
+
+/* ===== 路線圖 / 價目表切換 ===== */
+.view-tabs { margin-top: 1.1rem; display: inline-flex; padding: 3px; gap: 3px; background: var(--navy-soft); border-radius: 12px; }
+.view-tabs button {
+  min-height: 44px; padding: .4rem 1.1rem; font: inherit; font-weight: 700; color: rgba(255,255,255,.85);
+  background: transparent; border: 0; border-radius: 9px; cursor: pointer;
+}
+.view-tabs button:hover { color: var(--white); }
+.view-tabs button[aria-pressed="true"] { background: var(--white); color: var(--navy); }
+
+/* 看板裡的送機 / 接機切換：改成深色版 */
+.board-panel .seg { background: var(--navy-soft); border-color: transparent; }
+.board-panel .seg label > span { color: var(--white); }
+.board-panel .seg label + label { border-left-color: rgba(255,255,255,.18); }
+.board-panel .seg small { color: rgba(255,255,255,.7); }
+.board-panel .seg input:checked + span { background: var(--taxi); color: var(--navy); }
+.board-panel .seg input:checked + span small { color: rgba(11,19,64,.78); }
+.board-panel .seg input:focus-visible + span { outline-color: var(--white); }
+
+.map-head { margin-top: 1rem; display: grid; gap: .75rem; align-items: end; }
+.map-head .board-hint { margin: 0; }
+.dir-toggle { justify-self: start; }
+@media (min-width: 720px) {
+  .map-head { grid-template-columns: 1fr auto; }
+  .dir-toggle { justify-self: end; }
+}
+
+/* ===== 路線圖：像地鐵路線，從機場出發沿線一站一站標價 ===== */
+.route-grid { margin-top: 1.25rem; display: grid; gap: 1.75rem 2rem; }
+@media (min-width: 720px) { .route-grid { grid-template-columns: repeat(2, 1fr); } }
+.route-name { font-size: 1.05rem; color: var(--taxi); margin-bottom: .6rem; }
+.route-stops { position: relative; display: grid; padding-left: 2.1rem; list-style: none; }
+.route-stops::before {                      /* 沿線的黃色線 */
+  content: ""; position: absolute; left: .78rem; top: .9rem; bottom: .9rem; width: 5px;
+  background: var(--taxi); border-radius: 3px;
+}
+.route-start { position: relative; padding-block: .1rem .55rem; }
+.route-start span { font-family: var(--num); font-weight: 700; font-size: 1.15rem; letter-spacing: .08em; color: var(--taxi); }
+.route-start::before {                      /* 機場起點 */
+  content: ""; position: absolute; left: -1.82rem; top: .25rem; width: 1.2rem; height: 1.2rem;
+  background: var(--taxi); border: 4px solid #070B2E; border-radius: 50%; box-shadow: 0 0 0 3px var(--taxi);
+}
+.route-stops li { position: relative; }
+.stop {
+  position: relative; display: flex; align-items: baseline; justify-content: space-between; gap: 1rem; width: 100%;
+  min-height: 48px; padding: .45rem .75rem; font: inherit; text-align: left;
+  color: var(--white); background: transparent; border: 0; border-radius: 10px; cursor: pointer;
+}
+.stop::before {                             /* 站點圓圈 */
+  content: ""; position: absolute; left: -1.62rem; top: 50%; width: .9rem; height: .9rem; margin-top: -.45rem;
+  background: #070B2E; border: 3px solid var(--taxi); border-radius: 50%;
+}
+.stop:hover { background: rgba(255,255,255,.08); }
+.stop-name { font-weight: 500; font-size: 1.05rem; }
+.stop-price { font-family: var(--num); font-weight: 600; font-size: 1.6rem; line-height: 1.2; color: var(--taxi); font-variant-numeric: tabular-nums; }
+.stop[aria-pressed="true"] { background: var(--taxi); color: var(--navy); }
+.stop[aria-pressed="true"] .stop-price { color: var(--navy); }
+.stop[aria-pressed="true"]::before { background: var(--white); border-color: var(--taxi); }
+
+/* ===== 服務原則看板（首頁） ===== */
+.delay-board th small { display: block; font-size: .72rem; font-weight: 400; letter-spacing: .04em; color: rgba(255,255,255,.5); }
+.delay-board td { padding-block: .85rem; vertical-align: baseline; }
+.delay-board tbody tr:last-child td { border-bottom: 0; }
+.delay-board .status { font-family: var(--num); font-weight: 600; font-size: 1.3rem; letter-spacing: .08em; color: var(--taxi); white-space: nowrap; }
+.delay-board td:last-child { color: var(--white); font-weight: 500; }
+.delay-board td:first-child { font-weight: 700; }
+@media (max-width: 639px) {
+  .delay-board thead { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+  .delay-board, .delay-board tbody, .delay-board tr, .delay-board td { display: block; }
+  .delay-board tbody tr { padding: .75rem .25rem; border-bottom: 1px solid rgba(255,255,255,.12); }
+  .delay-board tbody tr:last-child { border-bottom: 0; }
+  .delay-board td { padding: 0; border: 0; }
+  .delay-board .status { font-size: 1.05rem; }
+}
+
+/* ===== 夜間（台灣時間 22:00 至 06:00）：天空變深、出現星點 ===== */
+.night-note { margin-top: .75rem; font-weight: 500; color: var(--taxi); }
+.is-night .site-header, .is-night .hero, .is-night .page-head { background-color: #060924; }
+.is-night .hero, .is-night .page-head {
+  background-repeat: no-repeat;
+  background-image:
+    radial-gradient(circle at 86% 24%, rgba(255,255,255,.9) 0 1.2px, transparent 1.8px),
+    radial-gradient(circle at 92% 58%, rgba(255,255,255,.7) 0 1px, transparent 1.6px),
+    radial-gradient(circle at 74% 16%, rgba(255,255,255,.6) 0 1px, transparent 1.6px),
+    radial-gradient(circle at 63% 46%, rgba(255,255,255,.5) 0 1px, transparent 1.6px),
+    radial-gradient(circle at 96% 82%, rgba(255,255,255,.8) 0 1.2px, transparent 1.8px),
+    radial-gradient(circle at 81% 76%, rgba(255,255,255,.5) 0 1px, transparent 1.6px);
+}
+
+#delay .board-panel { margin-top: 1.5rem; }
+
+/* 舊版 style.css 用 #vehicle-tabs 這個 ID 設定了框線；新頁面用同一個 ID，這裡蓋掉它 */
+.gate-tabs#vehicle-tabs button,
+.gate-tabs#vehicle-tabs button:nth-child(even),
+.gate-tabs#vehicle-tabs button:nth-child(n+3) { border: 2px solid transparent; }
+.gate-tabs#vehicle-tabs button:hover { border-color: rgba(255,255,255,.5); }
+.gate-tabs#vehicle-tabs button[aria-pressed="true"]:hover { border-color: var(--white); }

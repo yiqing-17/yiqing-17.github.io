@@ -5,7 +5,13 @@
 ## 功能
 
 - **首頁**：登機證樣式的價格試算（接機或送機、機場、地區、車型）、三個機場入口、車型一覽、聯絡方式
-- **機場頁**（桃園 `tpe.html`、松山 `tsa.html`、清泉崗 `rmq.html`）：航班資訊看板風格的價目表，選了地區後底部出現預約列，一鍵用 LINE 預約
+- **機場頁**（桃園 `tpe.html`、松山 `tsa.html`、清泉崗 `rmq.html`）：
+  - **路線圖**：像地鐵路線，從機場出發沿線一站一站標價，可切換送機（Departure）與接機（Arrival）
+  - **完整價目表**：航班資訊看板風格，列出所有地區
+  - 選了站點或地區後，底部出現預約列，一鍵用 LINE 預約
+- **座位與行李圖示**：車型用小圖示標示可乘坐人數與行李數
+- **班機誤點不加價看板**（首頁）：用航班看板的樣式呈現深夜、誤點、天候的處理原則
+- **夜間天空**：台灣時間晚上 10 點到清晨 6 點，頁首變深並出現星點，提醒「一樣 24 小時接受預約」
 - **手機優先**：手機版價格固定在畫面底部，底部另有電話、LINE、WhatsApp 快速聯絡列
 - **SEO**：每頁獨立的 title / description / canonical、JSON-LD 結構化資料、自動產生的 `sitemap.xml`
 - **無障礙**：鍵盤可操作、有焦點外框、支援「減少動態效果」設定
@@ -32,6 +38,7 @@ python build.py
 只用 Python 標準函式庫，不用安裝任何套件。**產生出來的 `.html` 檔要一起 commit**，GitHub Pages 才有東西可以顯示。
 
 - 改價格：只改 `data/prices.json`，不需要重新建置
+- 改路線圖的站點：改 `data/routes.json`（每個站點指向價目表裡的一個地區，價格不會重複存放）；建置時會檢查站點對應的地區是否存在，名稱對不上就會停止並指出哪一個
 - 改導覽列、新增機場頁：改 `build.py` 最上面的 `AIRPORTS`、`NAV`，再執行 `python build.py`
 - 改頁首、頁尾：改 `src/partials/`，再執行 `python build.py`
 - 改頁面內容：改 `src/pages/`，再執行 `python build.py`
@@ -58,6 +65,7 @@ python build.py
 │   ├── airport.js        # 機場頁
 │   └── app.js            # 只給 all.html 用
 ├── data/prices.json      # 所有價格（機場、車型、地區、備註、Alphard）
+├── data/routes.json      # 路線圖：每個機場的路線與站點
 ├── data/fleet.json       # 車隊照片與規格（all.html 使用）
 ├── images/               # 車型照片（webp）與 Logo
 ├── favicon.svg

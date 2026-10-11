@@ -24,6 +24,33 @@
     return d.startsWith('0') ? '886' + d.slice(1) : d;
   };
 
+  /* 座位與行李圖示：人數、行李數用小圖示重複畫出來，旁邊附上給讀屏軟體的文字 */
+  const ICON_PERSON = '<svg class="cap-icon" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><circle cx="8" cy="4.5" r="2.7"/><path d="M2.5 14.5c0-3.2 2.4-5.2 5.5-5.2s5.5 2 5.5 5.2z"/></svg>';
+  const ICON_BAG = '<svg class="cap-icon" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><rect x="2.5" y="5" width="11" height="9" rx="1.6"/><path d="M5.5 5V3.6c0-.8.6-1.4 1.4-1.4h2.2c.8 0 1.4.6 1.4 1.4V5" fill="none" stroke="currentColor" stroke-width="1.3"/></svg>';
+  const capacityHtml = v => `
+    <span class="cap">
+      <span class="cap-row">${ICON_PERSON.repeat(v.passengers)}</span>
+      <span class="cap-row cap-bags">${ICON_BAG.repeat(v.luggage)}</span>
+      <span class="sr">${v.seats}</span>
+    </span>`;
+
+  /* 台灣時間的深夜與凌晨：天空變深，並提醒「一樣接受預約」 */
+  function applyNight() {
+    let hour;
+    try {
+      hour = Number(new Intl.DateTimeFormat('en-GB',
+        { timeZone: 'Asia/Taipei', hour: '2-digit', hourCycle: 'h23' }).format(new Date()));
+    } catch (err) { return; }
+    if (Number.isNaN(hour)) return;
+    const night = hour >= 22 || hour < 6;
+    document.documentElement.classList.toggle('is-night', night);
+    const note = $('#night-note');
+    if (note) {
+      note.hidden = !night;
+      note.textContent = hour >= 22 ? '現在是深夜，一樣 24 小時接受預約。' : '現在是凌晨，一樣 24 小時接受預約。';
+    }
+  }
+
   /* 店家資料（來自 js/config.js）填進頁面 */
   function applySiteInfo() {
     const links = {
@@ -62,5 +89,6 @@
     });
 
   applySiteInfo();
-  window.Huanyu = { SITE, $, $$, fmt, money, DIR, areasOf, minPrice, lineMessageUrl, reduceMotion, ready };
+  applyNight();
+  window.Huanyu = { SITE, $, $$, fmt, money, DIR, areasOf, minPrice, lineMessageUrl, capacityHtml, reduceMotion, ready };
 })();
