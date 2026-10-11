@@ -1,7 +1,7 @@
 // 機場頁：路線圖與航班資訊看板風格的價目表，選了地區後底部出現預約列
 (async () => {
   'use strict';
-  const { $, $$, fmt, money, DIR, areasOf, lineMessageUrl, capacityHtml, ready } = window.Huanyu;
+  const { $, $$, fmt, money, DIR, areasOf, lineMessageUrl, bookingUrl, capacityHtml, ready } = window.Huanyu;
   const data = await ready;
   if (!data) return;
 
@@ -108,6 +108,7 @@
     $('#qb-area').textContent = area.name;
     $('#qb-vehicle').textContent = `${airport.name}，${vehicle().name}`;
     $('#qb-price').textContent = fmt(price);
+    $('#qb-more').href = bookingUrl({ airportId: airport.id, dir: state.dir, vehicleId: state.vehicleId, areaName: area.name });
     $('#qb-line').href = lineMessageUrl([
       '您好，我想預約：',
       `服務：${DIR[state.dir].label}`,

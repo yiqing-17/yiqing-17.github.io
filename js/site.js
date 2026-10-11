@@ -68,6 +68,10 @@
     if (SITE.showWhatsapp === false) $$('[data-whatsapp]').forEach(el => { el.hidden = true; });
   }
 
+  // 連到預約頁，並帶著目前選好的行程（預約頁會讀取這些參數）
+  const bookingUrl = ({ airportId, dir, vehicleId, areaName }) =>
+    'booking.html?' + new URLSearchParams({ airport: airportId, dir, vehicle: vehicleId, area: areaName }).toString();
+
   // 官方 LINE 的「帶入預約內容」連結
   const lineMessageUrl = text =>
     `https://line.me/R/oaMessage/${encodeURIComponent(SITE.lineId || '')}/?${encodeURIComponent(text)}`;
@@ -90,5 +94,5 @@
 
   applySiteInfo();
   applyNight();
-  window.Huanyu = { SITE, $, $$, fmt, money, DIR, areasOf, minPrice, lineMessageUrl, capacityHtml, reduceMotion, ready };
+  window.Huanyu = { SITE, $, $$, fmt, money, DIR, areasOf, minPrice, lineMessageUrl, bookingUrl, capacityHtml, reduceMotion, ready };
 })();

@@ -260,3 +260,38 @@ body.has-quote-bar { padding-bottom: calc(60px + 200px + env(safe-area-inset-bot
 .gate-tabs#vehicle-tabs button:nth-child(n+3) { border: 2px solid transparent; }
 .gate-tabs#vehicle-tabs button:hover { border-color: rgba(255,255,255,.5); }
 .gate-tabs#vehicle-tabs button[aria-pressed="true"]:hover { border-color: var(--white); }
+
+/* =========================================================================
+   第三批：獨立頁面（車隊、服務須知、預約、司機招募）
+   ========================================================================= */
+
+/* 首頁試算票根與機場頁預約列：連到預約頁的小連結 */
+.stub-more { justify-self: center; margin-top: .15rem; font-weight: 500; color: var(--navy); text-underline-offset: 4px; }
+@media (max-width: 799px) { .stub-more { display: none; } }
+.qb-more { margin-left: .5rem; font-weight: 500; color: var(--navy); text-underline-offset: 3px; white-space: nowrap; }
+
+/* 底色是淺灰的區塊裡，聯絡卡片改白底 */
+.contact-list-paper .contact-item { background: var(--white); }
+
+/* ===== 預約頁 ===== */
+.booking-page { display: grid; gap: 2.5rem; }
+.trip { padding: 1.25rem; background: var(--white); border-radius: 16px; }
+.trip h2, .passenger h2 { font-size: clamp(1.4rem, 4vw, 1.75rem); }
+.trip-form { margin-top: 1rem; display: grid; gap: 1.25rem; }
+.trip-price { margin-top: 1.25rem; padding: 1rem 1.25rem; background: var(--taxi-tint); border: 2px dashed #E4C766; border-radius: 14px; color: var(--navy); }
+.trip-label { font-size: .9rem; color: var(--muted); }
+.trip-desc { margin-top: .5rem; font-size: .92rem; color: var(--muted); }
+.trip-note { margin-top: .5rem; font-size: .85rem; color: var(--muted); }
+.passenger .form { margin-top: 1.25rem; }
+@media (min-width: 900px) {
+  .booking-page { grid-template-columns: 1fr 1.2fr; gap: 3rem; align-items: start; }
+  .trip { padding: 1.75rem; }
+}
+
+/* ===== 司機招募 ===== */
+.offer-badge { display: inline-block; padding: .45rem 1.1rem; font-size: clamp(1.25rem, 4vw, 1.6rem); font-weight: 700; line-height: 1.4; color: var(--navy); background: var(--taxi); border-radius: 10px; }
+.recruit-light { margin-top: 2rem; display: grid; gap: 2rem; }
+.recruit-light h3 { margin-bottom: .6rem; font-size: 1.2rem; color: var(--navy); }
+.checks-light li { color: var(--ink); }
+.checks-light li::before { border-color: var(--navy); }
+@media (min-width: 800px) { .recruit-light { grid-template-columns: 1fr 1fr; gap: 3rem; } }

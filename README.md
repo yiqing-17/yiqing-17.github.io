@@ -47,34 +47,48 @@ python build.py
 
 ```
 .
-├── build.py              # 建置腳本
+├── build.py              # 建置腳本（頁面設定在檔案最上面）
 ├── src/
-│   ├── partials/         # 共用的 head、頁首、頁尾
-│   └── pages/            # 頁面範本（index、airport）
-├── index.html            # 以下 4 個是建置產生的
+│   ├── partials/         # 共用片段：head、頁首、頁尾、頁面標題、聯絡清單、飛機圖示
+│   └── pages/            # 頁面範本：index、airport、fleet、terms、booking、recruit
+├── index.html            # 以下 8 個頁面是建置產生的，要一起 commit
 ├── tpe.html  tsa.html  rmq.html
+├── fleet.html  terms.html  booking.html  recruit.html
 ├── sitemap.xml           # 建置時一併產生
-├── all.html              # 舊的單頁完整版（暫時保留，不被搜尋引擎收錄）
 ├── css/
 │   ├── style.css         # 基本樣式
-│   └── airport.css       # 機場風樣式（新版頁面）
+│   └── airport.css       # 機場風樣式
 ├── js/
 │   ├── config.js         # 店名、電話、LINE、地址
-│   ├── site.js           # 新版頁面共用
-│   ├── home.js           # 首頁
-│   ├── airport.js        # 機場頁
-│   └── app.js            # 只給 all.html 用
+│   ├── site.js           # 所有頁面共用
+│   ├── home.js           # 首頁：價格試算
+│   ├── airport.js        # 機場頁：路線圖與價目表
+│   ├── fleet.js          # 車隊頁
+│   └── booking.js        # 預約頁
 ├── data/prices.json      # 所有價格（機場、車型、地區、備註、Alphard）
 ├── data/routes.json      # 路線圖：每個機場的路線與站點
-├── data/fleet.json       # 車隊照片與規格（all.html 使用）
+├── data/fleet.json       # 車隊照片與規格
 ├── images/               # 車型照片（webp）與 Logo
 ├── favicon.svg
 └── robots.txt
 ```
 
-## 還沒拆成獨立頁面的部分
+## 頁面
 
-車隊、服務須知、預約、司機招募目前還在 `all.html`，導覽列暫時連到那裡的對應區塊。拆成獨立頁面後，在 `build.py` 的 `NAV` 把連結改成新頁面即可。
+| 頁面 | 檔案 | 內容 |
+|---|---|---|
+| 首頁 | `index.html` | 價格試算、三個機場入口、服務項目、車型、班機誤點看板、聯絡方式 |
+| 桃園、松山、清泉崗機場 | `tpe.html` `tsa.html` `rmq.html` | 路線圖與完整價目表 |
+| 車隊 | `fleet.html` | 11 款車型與實車照片 |
+| 服務須知 | `terms.html` | 服務特色、收費與搭乘規定 |
+| 預約 | `booking.html` | 選行程、填乘客資料、用 LINE 傳出；可從機場頁帶參數進來 |
+| 司機招募 | `recruit.html` | 招募內容 |
+
+預約頁可以接受網址參數預填行程，例如 `booking.html?airport=tsa&dir=pickup&vehicle=van&area=台中`，不合法的值會自動忽略。
+
+## 備註
+
+`css/style.css` 裡還留有一些舊版單頁使用、目前沒有頁面用到的樣式（例如舊的價目表、舊的預約區塊），不影響運作，之後可以清理。
 
 ## 目前的資料狀態
 

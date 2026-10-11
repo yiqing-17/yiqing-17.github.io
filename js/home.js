@@ -1,7 +1,7 @@
 // 首頁：價格試算（登機證）與車型一覽
 (async () => {
   'use strict';
-  const { $, $$, fmt, money, DIR, areasOf, lineMessageUrl, capacityHtml, reduceMotion, ready } = window.Huanyu;
+  const { $, $$, fmt, money, DIR, areasOf, lineMessageUrl, bookingUrl, capacityHtml, reduceMotion, ready } = window.Huanyu;
   const data = await ready;
   if (!data) return;
 
@@ -70,6 +70,7 @@
     lastPrice = price;
     $('#price-desc').textContent = `${DIR[state.dir].label}，${airport().name}，${vehicle().name}，${area.name}`;
     $('#quote-line').href = lineMessageUrl(['您好，我想預約：', ...quoteLines()].join('\n'));
+    $('#quote-more').href = bookingUrl({ airportId: state.airportId, dir: state.dir, vehicleId: state.vehicleId, areaName: area.name });
   }
 
   function renderVehicleGrid() {

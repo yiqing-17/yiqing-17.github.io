@@ -6,16 +6,7 @@
 <body data-airport="{{airport_id}}">
 {{> header}}
 
-<section class="page-head on-dark">
-  <div class="wrap page-head-grid">
-    <p class="airport-code" aria-hidden="true">{{code}}</p>
-    <div>
-      <h1>{{h1}}</h1>
-      <p class="lede">{{intro}}</p>
-      <p class="night-note" id="night-note" hidden></p>
-    </div>
-  </div>
-</section>
+{{> page_head}}
 
 <main id="main">
   <section class="section board-section">
@@ -98,7 +89,7 @@
   <div class="wrap quote-bar-inner">
     <div class="qb-info" aria-live="polite">
       <p class="qb-area" id="qb-area"></p>
-      <p class="qb-vehicle" id="qb-vehicle"></p>
+      <p class="qb-vehicle"><span id="qb-vehicle"></span> <a class="qb-more" id="qb-more" href="{{href_booking}}">填寫詳細預約</a></p>
     </div>
     <div class="seg qb-dir">
       <label><input type="radio" name="qbdir" value="send" checked><span>送機</span></label>

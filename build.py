@@ -36,17 +36,37 @@ AIRPORTS = [
          intro="台中清泉崗機場送機與接機單趟報價，接機價為送機價加 100 元。"),
 ]
 
-# 導覽列：(文字, 連結, 對應的頁面檔名)
-# 還沒拆成獨立頁面的項目，暫時連到 all.html 的對應區塊；之後拆好只要改這裡。
+# 導覽列：(文字, 連結)。連結要等於頁面的檔名，目前所在頁面才會亮起來。
 NAV = [
     ("首頁", "index.html"),
     ("桃園機場", "tpe.html"),
     ("松山機場", "tsa.html"),
     ("清泉崗機場", "rmq.html"),
-    ("車隊", "all.html#fleet"),
-    ("服務須知", "all.html#terms"),
-    ("預約", "all.html#booking"),
-    ("司機招募", "all.html#recruit"),
+    ("車隊", "fleet.html"),
+    ("服務須知", "terms.html"),
+    ("預約", "booking.html"),
+    ("司機招募", "recruit.html"),
+]
+
+# 其他頁面：src/pages/<src>.html -> <out>
+# code 是頁面標題旁邊的大字，intro 是標題下的說明。
+STATIC_PAGES = [
+    dict(out="fleet.html", src="fleet.html", code="FLEET", h1="車隊",
+         title="車隊｜轎車、休旅車、九人座商務車｜寰宇機場接送",
+         description="寰宇機場接送的車隊：Toyota Camry、bZ4X、Mercedes-Benz E-Class、Lexus ES、Sienna、Granvia、Staria、Alphard、V-Class、VW Caravelle、Crafter。全部為公司車輛，不拼車、不共乘。",
+         intro="11 款車型，全部為公司車輛，不拼車、不共乘。"),
+    dict(out="terms.html", src="terms.html", code="INFO", h1="服務須知",
+         title="服務須知｜收費、等候與取消規範｜寰宇機場接送",
+         description="寰宇機場接送的服務特色與費用須知：安全座椅與停靠點加收、等候費用、取消規範、搭乘與超載規定。",
+         intro="服務特色，以及收費、等候、取消與搭乘規範。"),
+    dict(out="booking.html", src="booking.html", code="BOOK", h1="預約",
+         title="預約｜桃園、松山、清泉崗機場接送｜寰宇機場接送",
+         description="選好機場、地區與車型，填寫乘客資料，用官方 LINE 傳給寰宇機場接送完成預約。24 小時接受預約。",
+         intro="選好行程、填寫資料，再用官方 LINE 傳給我們。"),
+    dict(out="recruit.html", src="recruit.html", code="JOIN", h1="誠徵靠行、租購、長短租司機",
+         title="誠徵靠行、租購、長短租司機｜寰宇機場接送",
+         description="寰宇機場接送誠徵靠行、租購、長短租司機，第一年靠行費優待不收。公司派單、彈性排班，以商務、觀光客為主。",
+         intro="公司派單，不用自己找客人；兼職、全職皆可。"),
 ]
 
 # ---------------------------------------------------------------- 工具 ----
@@ -134,6 +154,8 @@ def main():
         site_url=SITE_URL,
         href_fleet=dict(NAV)["車隊"],
         href_terms=dict(NAV)["服務須知"],
+        href_booking=dict(NAV)["預約"],
+        href_recruit=dict(NAV)["司機招募"],
         min_price=f"{min_price(prices[AIRPORTS[0]['id']]):,}",
         gates="\n".join(gate_html(a, prices) for a in AIRPORTS),
     )
@@ -159,6 +181,16 @@ def main():
             title=a["title"], description=a["description"], url=SITE_URL + out,
             airport_id=a["id"], code=a["code"], h1=a["h1"], intro=a["intro"],
             other_gates="\n".join(gate_html(o, prices) for o in others),
+        )))
+        outputs.append(out)
+
+    # 其他獨立頁面
+    for pg in STATIC_PAGES:
+        out = pg["out"]
+        write(ROOT / out, render(read(SRC / "pages" / pg["src"]), dict(
+            base, nav=nav_html(out),
+            title=pg["title"], description=pg["description"], url=SITE_URL + out,
+            code=pg["code"], h1=pg["h1"], intro=pg["intro"],
         )))
         outputs.append(out)
 

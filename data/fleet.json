@@ -5,7 +5,8 @@
     "image": "images/camry.webp",
     "passengers": 4,
     "luggage": "28 吋 2 件",
-    "use": ""
+    "use": "",
+    "bags": 2
   },
   {
     "name": "舒適五人座休旅車",
@@ -13,7 +14,8 @@
     "image": "images/bz4x.webp",
     "passengers": 4,
     "luggage": "28 吋 2 件",
-    "use": "純電包車旅遊"
+    "use": "純電包車旅遊",
+    "bags": 2
   },
   {
     "name": "豪華五人座轎車",
@@ -21,7 +23,8 @@
     "image": "images/e-class.webp",
     "passengers": 4,
     "luggage": "28 吋 2 件",
-    "use": "商務接送"
+    "use": "商務接送",
+    "bags": 2
   },
   {
     "name": "豪華五人座轎車",
@@ -29,7 +32,8 @@
     "image": "images/lexus-es.webp",
     "passengers": 4,
     "luggage": "28 吋 2 件",
-    "use": "商務接送"
+    "use": "商務接送",
+    "bags": 2
   },
   {
     "name": "舒適九人座車",
@@ -37,7 +41,8 @@
     "image": "images/sienna.webp",
     "passengers": 8,
     "luggage": "28 吋 8 件",
-    "use": "家庭旅遊、團體"
+    "use": "家庭旅遊、團體",
+    "bags": 8
   },
   {
     "name": "舒適九人座車",
@@ -45,7 +50,8 @@
     "image": "images/granvia.webp",
     "passengers": 8,
     "luggage": "28 吋 8 件",
-    "use": "家庭旅遊、團體"
+    "use": "家庭旅遊、團體",
+    "bags": 8
   },
   {
     "name": "高級豪華商務車",
@@ -53,7 +59,8 @@
     "image": "images/staria.webp",
     "passengers": 8,
     "luggage": "28 吋 8 件",
-    "use": "商務"
+    "use": "商務",
+    "bags": 8
   },
   {
     "name": "進口豪華高級商務車",
@@ -61,7 +68,8 @@
     "image": "images/alphard.webp",
     "passengers": 8,
     "luggage": "28 吋 8 件",
-    "use": "VIP 接送"
+    "use": "VIP 接送",
+    "bags": 8
   },
   {
     "name": "豪華賓士九人座車",
@@ -69,7 +77,8 @@
     "image": "images/v-class.webp",
     "passengers": 8,
     "luggage": "28 吋 8 件",
-    "use": "VIP 接送"
+    "use": "VIP 接送",
+    "bags": 8
   },
   {
     "name": "高級豪華商務九人座",
@@ -77,7 +86,8 @@
     "image": "images/caravelle.webp",
     "passengers": 8,
     "luggage": "28 吋 8 件",
-    "use": "商務、團體"
+    "use": "商務、團體",
+    "bags": 8
   },
   {
     "name": "福斯九人座車",
@@ -85,6 +95,7 @@
     "image": "images/crafter.webp",
     "passengers": 8,
     "luggage": "28 吋 8 件",
-    "use": "大團體包車"
+    "use": "大團體包車",
+    "bags": 8
   }
 ]
