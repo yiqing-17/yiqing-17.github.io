@@ -1,0 +1,356 @@
+<!doctype html>
+<html lang="zh-Hant-TW">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>寰宇機場接送｜桃園機場接送價格最低 900 元起｜台北到桃園機場｜機場包車旅遊</title>
+  <meta name="description" content="提供 24 小時專業接送、商務出差包車與全台九人座旅遊用車。深耕多年、價格透明，台北至桃園機場最低 900 元起。預約專線：0900-043-688。">
+  <meta name="robots" content="noindex">
+  <meta name="theme-color" content="#0B1340">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="寰宇機場接送｜桃園機場接送價格最低 900 元起">
+  <meta property="og:description" content="24 小時專業接送、商務出差包車與全台九人座旅遊用車。台北至桃園機場最低 900 元起。">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+
+</head>
+<body>
+  <a class="skip" href="#main">跳到主要內容</a>
+
+  <header class="site-header on-dark">
+    <div class="wrap bar">
+      <a class="brand" href="index.html" data-text="brand">寰宇機場接送</a>
+      <nav class="nav" aria-label="主選單">
+        <a href="#price">價目表</a>
+        <a href="#fleet">車隊</a>
+        <a href="#terms">服務須知</a>
+        <a href="#booking">預約</a>
+        <a href="#recruit">司機招募</a>
+        <a href="#contact">聯絡我們</a>
+      </nav>
+      <a class="btn btn-taxi header-call" data-link="phone"><span data-text="phone">0900-043-688</span></a>
+    </div>
+  </header>
+
+  <section class="hero on-dark" id="top">
+    <div class="wrap">
+      <h1><span class="h1-line">桃園機場接送，</span><span class="h1-line">單趟 <span data-min-price>900</span> 元起</span></h1>
+      <p class="lede">24 小時接受預約。選好地區與車型，馬上看到價格，確認後直接用 LINE 傳給我們。</p>
+    </div>
+  </section>
+
+  <main id="main">
+    <!-- 價格試算：做成登機證的樣子，是整頁唯一刻意強調的視覺 -->
+    <section class="wrap quote" aria-labelledby="est-title">
+      <div class="ticket-shell">
+        <form class="ticket" id="estimator" autocomplete="off">
+          <div class="ticket-main">
+            <h2 id="est-title">查詢這一趟的價格</h2>
+
+            <fieldset class="field">
+              <legend>要搭哪一種</legend>
+              <div class="seg">
+                <label><input type="radio" name="dir" value="send" checked><span>送機<small>前往機場</small></span></label>
+                <label><input type="radio" name="dir" value="pickup"><span>接機<small>從機場出發</small></span></label>
+              </div>
+            </fieldset>
+
+            <div class="field-row">
+              <label class="field">
+                <span class="field-label">機場</span>
+                <select id="airport"></select>
+              </label>
+              <label class="field">
+                <span class="field-label">上下車地區</span>
+                <select id="area"></select>
+                <span class="field-note" id="area-full" hidden></span>
+              </label>
+            </div>
+
+            <fieldset class="field">
+              <legend>車型</legend>
+              <div class="chips" id="vehicle-chips"></div>
+            </fieldset>
+
+            <p class="error" id="estimator-error" role="alert" hidden>
+              無法載入價目資料。請用本機伺服器開啟網站（做法在 README），不要直接點兩下開啟檔案。
+            </p>
+          </div>
+
+          <div class="ticket-stub" aria-live="polite">
+            <p class="stub-label">這一趟</p>
+            <p class="price"><span class="cur">NT$</span><b id="price">—</b></p>
+            <p class="stub-desc" id="price-desc"></p>
+            <a class="btn btn-navy" id="quote-line" target="_blank" rel="noopener">用 LINE 預約</a>
+            <a class="btn btn-outline" data-link="phone">撥打電話</a>
+          </div>
+        </form>
+      </div>
+    </section>
+
+    <section class="section" id="price">
+      <div class="wrap">
+        <h2>價目表</h2>
+        <p class="section-lede">點地區名稱，上方會帶入試算。<span id="price-updated"></span></p>
+
+        <div class="controls">
+          <div class="seg seg-buttons" id="airport-tabs" role="group" aria-label="機場"></div>
+          <div class="seg seg-buttons" id="vehicle-tabs" role="group" aria-label="車型"></div>
+        </div>
+
+        <div class="table-scroll">
+          <table class="price-table stack">
+            <caption class="sr" id="table-caption"></caption>
+            <thead>
+              <tr><th scope="col">地區</th><th scope="col" class="num">送機</th><th scope="col" class="num">接機</th></tr>
+            </thead>
+            <tbody id="price-body"></tbody>
+          </table>
+        </div>
+        <div class="premium" id="premium" hidden>
+          <h3 id="premium-title"></h3>
+          <p class="premium-caption" id="premium-caption"></p>
+          <table class="price-table premium-table">
+            <caption class="sr">Alphard 尊爵價目表</caption>
+            <thead><tr><th scope="col">地區</th><th scope="col" class="num">單趟價格</th></tr></thead>
+            <tbody id="premium-body"></tbody>
+          </table>
+        </div>
+        <ul class="notes" id="notes"></ul>
+      </div>
+    </section>
+
+    <section class="section section-tint" id="services">
+      <div class="wrap">
+        <h2>服務項目</h2>
+        <dl class="services">
+          <div>
+            <dt>機場接送</dt>
+            <dd>桃園機場、松山機場、清泉崗機場的送機與接機，依地區與車型固定計價。</dd>
+          </div>
+          <div>
+            <dt>商務包車</dt>
+            <dd>商務出差用車，依時段與行程報價。</dd>
+          </div>
+          <div>
+            <dt>旅遊包車</dt>
+            <dd>全台九人座旅遊用車，適合家庭與小團體出遊。</dd>
+          </div>
+          <div>
+            <dt>長租車與司機招募</dt>
+            <dd>短租、長租、出租租購請直接與我們聯絡，司機招募請看<a href="#recruit">招募資訊</a>。</dd>
+          </div>
+        </dl>
+      </div>
+    </section>
+
+    <section class="section" id="fleet">
+      <div class="wrap">
+        <h2>車隊</h2>
+        <p class="section-lede">全部為公司車輛，不拼車、不共乘。需要 Alphard、LM、進口轎車、大 T 保母車或小巴以上遊覽車，請加官方 LINE 詢問。</p>
+        <div class="fleet" id="fleet-grid"></div>
+
+        <h3 class="sub">實車照片</h3>
+        <div class="real-photos">
+          <figure><img src="images/real-sedan.webp" alt="國產五人座轎車的外觀、後座與行李廂" width="298" height="378" loading="lazy"><figcaption>國產五人座轎車</figcaption></figure>
+          <figure><img src="images/real-suv.webp" alt="國產五人座休旅車的外觀、後座與行李廂" width="298" height="378" loading="lazy"><figcaption>國產五人座休旅車</figcaption></figure>
+          <figure><img src="images/real-van.webp" alt="九人座商務車的車內座椅與行李空間" width="298" height="378" loading="lazy"><figcaption>九人座商務車</figcaption></figure>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section-tint" id="terms">
+      <div class="wrap terms">
+        <div>
+          <h2>服務特色</h2>
+          <ul class="features">
+            <li>深夜凌晨、班機誤點不加價</li>
+            <li>提供無菸車，不必擔心車上有菸味異味</li>
+            <li>全日無加費時段，價格透明</li>
+            <li>九人座使用福斯、新現代，九座賓士 Vito 另價</li>
+            <li>車輛均為公司車，沒有靠行車、私人車，也沒有坐地起價的疑慮</li>
+            <li>不拼車，不共乘。直達車中途不休息（除非客戶要求上廁所）</li>
+            <li>司機均有良民證及無重大肇事紀錄</li>
+            <li>遇颱風、地震、天候、班機調度、航空公司罷工等不可抗力因素，只要儘早告知班機延後，我們都會等待</li>
+            <li>均投保新台幣 500 萬高額乘客保險</li>
+          </ul>
+        </div>
+        <div>
+          <h2>費用與搭乘須知</h2>
+          <dl class="rules">
+            <div><dt>額外收費</dt><dd><ul>
+              <li>安全座椅、增高墊：每個加收 200 元</li>
+              <li>每增加一個停靠點：加收 200 元</li>
+              <li>收據請於下車前向司機索取</li>
+            </ul></dd></div>
+            <div><dt>等候費用</dt><dd><ul>
+              <li>送機超過 15 分鐘：加收 600 元</li>
+              <li>接機超過 60 分鐘：加收 600 元</li>
+              <li>等候費不含車資</li>
+            </ul></dd></div>
+            <div><dt>取消規範</dt><dd><ul>
+              <li>取消需於 6 小時前通知</li>
+              <li>司機已到場等候，需支付半額空趟費</li>
+            </ul></dd></div>
+            <div><dt>搭乘須知</dt><dd><ul>
+              <li>行李一律放置後車廂，貴重物品可隨身攜帶</li>
+              <li>12 歲以下需使用安全座椅或繫安全帶</li>
+              <li>0～5 歲、18 公斤以內強制使用安全座椅</li>
+            </ul></dd></div>
+            <div><dt>超載規範</dt><dd><ul>
+              <li>九人座限乘 8 位以下</li>
+              <li>超載司機有權拒載，保險不予理賠</li>
+            </ul></dd></div>
+          </dl>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="booking">
+      <div class="wrap booking">
+        <div class="booking-intro">
+          <h2>填寫預約資料</h2>
+          <p class="section-lede">填好後按「傳到 LINE」，預約內容會自動帶進對話框，你只要按送出。所有預約須透過官方 LINE@ 完成，客服會再核對航班、日期與時間。</p>
+          <p class="section-lede hint">請確認班機時間是清晨 AM 還是下午 PM，長程航班抵台也要注意是否跨日。</p>
+          <p class="summary" id="booking-summary"></p>
+          <p><a href="#estimator" class="text-link">修改地區或車型</a></p>
+        </div>
+
+        <form class="form" id="booking-form">
+          <label class="field">
+            <span class="field-label">姓名</span>
+            <input type="text" id="f-name" name="name" autocomplete="name" required>
+          </label>
+          <label class="field">
+            <span class="field-label">聯絡電話</span>
+            <input type="tel" id="f-phone" name="phone" autocomplete="tel" inputmode="tel" required>
+          </label>
+          <label class="field">
+            <span class="field-label">日期</span>
+            <input type="date" id="f-date" name="date" required>
+          </label>
+          <label class="field">
+            <span class="field-label" id="l-time">上車時間</span>
+            <input type="time" id="f-time" name="time" required>
+          </label>
+          <label class="field field-wide">
+            <span class="field-label" id="l-address">上車地址</span>
+            <input type="text" id="f-address" name="address" autocomplete="street-address" required>
+          </label>
+          <label class="field">
+            <span class="field-label" id="l-flight">起飛航班（選填）</span>
+            <input type="text" id="f-flight" name="flight" placeholder="例：BR 123">
+          </label>
+          <div class="field-pair">
+            <label class="field">
+              <span class="field-label">人數</span>
+              <input type="number" id="f-pax" name="pax" min="1" max="9" inputmode="numeric">
+            </label>
+            <label class="field">
+              <span class="field-label">行李數</span>
+              <input type="number" id="f-bags" name="bags" min="0" max="20" inputmode="numeric">
+            </label>
+          </div>
+          <label class="field field-wide">
+            <span class="field-label">備註（選填）</span>
+            <textarea id="f-note" name="note" rows="2" placeholder="例：需要兒童座椅"></textarea>
+          </label>
+
+          <label class="field field-wide">
+            <span class="field-label">預約內容預覽</span>
+            <textarea id="preview" rows="8" readonly></textarea>
+          </label>
+
+          <div class="actions field-wide">
+            <button type="submit" class="btn btn-navy">傳到 LINE</button>
+            <button type="button" class="btn btn-outline" id="copy-btn">複製預約內容</button>
+            <span class="status" id="copy-status" role="status"></span>
+          </div>
+        </form>
+      </div>
+    </section>
+
+    <section class="section on-dark recruit" id="recruit">
+      <div class="wrap recruit-grid">
+        <div>
+          <h2>誠徵靠行、租購、長短租司機</h2>
+          <p class="recruit-offer">第一年靠行費優待不收</p>
+          <div class="recruit-cta">
+            <a class="btn btn-taxi" data-link="line" target="_blank" rel="noopener">用 LINE 洽詢</a>
+            <a class="btn btn-outline-light" data-link="phone">撥打電話</a>
+          </div>
+        </div>
+        <div class="recruit-lists">
+          <div>
+            <h3>我們提供</h3>
+            <ul class="checks">
+              <li>高薪獎勵：收入穩定，另有額外獎金</li>
+              <li>彈性排班：自由安排，兼職、全職皆可</li>
+              <li>優質乘客：以商務、觀光客為主</li>
+              <li>公司派單：不用自己找客人</li>
+            </ul>
+          </div>
+          <div>
+            <h3>應徵條件</h3>
+            <ul class="checks">
+              <li>持有合法駕照、職業駕駛登記證</li>
+              <li>熟悉台灣道路、機場接送路線</li>
+              <li>親切、守時、重視服務品質</li>
+              <li>有租賃車牌者優先</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section-tint" id="contact">
+      <div class="wrap">
+        <h2>聯絡我們</h2>
+        <p class="section-lede"><span data-text="hours">24 小時接受預約</span>。加入官方 LINE 後可要求通話，節省電話費，也可以用語音告知需求。</p>
+        <div class="contact-list">
+          <a class="contact-item" data-link="phone">
+            <span class="contact-name">電話</span>
+            <span class="contact-value" data-text="phone">0900-043-688</span>
+          </a>
+          <a class="contact-item" data-link="ownerPhone">
+            <span class="contact-name"><span data-text="ownerName">翁老闆</span></span>
+            <span class="contact-value" data-text="ownerPhone">0956-602-888</span>
+          </a>
+          <a class="contact-item" data-link="line" target="_blank" rel="noopener">
+            <span class="contact-name">LINE</span>
+            <span class="contact-value" data-text="lineId">@157odygh</span>
+          </a>
+          <a class="contact-item" data-link="whatsapp" target="_blank" rel="noopener" data-whatsapp>
+            <span class="contact-name">WhatsApp</span>
+            <span class="contact-value" data-text="phone">0900-043-688</span>
+          </a>
+          <a class="contact-item" data-link="map" target="_blank" rel="noopener">
+            <span class="contact-name">地址</span>
+            <span class="contact-value contact-address" data-text="address">337 桃園市大園區平安路72號</span>
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer on-dark">
+    <div class="wrap">
+      <p><span data-text="brand">寰宇機場接送</span>　<span data-text="phone">0900-043-688</span></p>
+      <p class="fine">價格與服務內容以預約確認為準。</p>
+    </div>
+  </footer>
+
+  <nav class="float-bar on-dark" aria-label="快速聯絡">
+    <a data-link="phone">電話</a>
+    <a data-link="line" target="_blank" rel="noopener">LINE</a>
+    <a data-link="whatsapp" target="_blank" rel="noopener" data-whatsapp>WhatsApp</a>
+  </nav>
+
+  <script src="js/config.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

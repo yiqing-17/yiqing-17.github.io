@@ -5,7 +5,7 @@ window.SITE = {
   phone: "0900-043-688",       // 預約專線；撥號與 WhatsApp 連結會自動轉換
   ownerName: "翁老闆",
   ownerPhone: "0956-602-888",
-  lineId: "@157odygh",         // LINE 官方帳號 ID（含 @）
+  lineId: "@412nwayd",         // LINE 官方帳號 ID（含 @）
   address: "337 桃園市大園區平安路72號",
   hours: "24 小時接受預約",
   showWhatsapp: true

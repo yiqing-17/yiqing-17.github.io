@@ -295,3 +295,15 @@ body.has-quote-bar { padding-bottom: calc(60px + 200px + env(safe-area-inset-bot
 .checks-light li { color: var(--ink); }
 .checks-light li::before { border-color: var(--navy); }
 @media (min-width: 800px) { .recruit-light { grid-template-columns: 1fr 1fr; gap: 3rem; } }
+
+/* ===== 重要公告（服務須知頁） ===== */
+.notice-grid { margin-top: 1.25rem; display: grid; gap: 1rem; }
+.notice-item { padding: 1.25rem 1.4rem; background: var(--white); border-left: 6px solid var(--taxi); border-radius: 14px; }
+.notice-item h3 { margin-bottom: .5rem; font-size: 1.15rem; color: var(--navy); }
+.notice-item p + p { margin-top: .75rem; }
+.statement { margin-top: 1rem; padding: 1.4rem 1.5rem; border-radius: 14px; }
+.statement h3 { margin-bottom: .5rem; font-size: 1.2rem; color: var(--taxi); }
+.statement p { color: rgba(255,255,255,.92); }
+.statement p + p { margin-top: .75rem; }
+.signature { margin-top: 1.25rem; text-align: right; color: var(--muted); }
+@media (min-width: 900px) { .notice-grid { grid-template-columns: repeat(3, 1fr); align-items: start; } }
