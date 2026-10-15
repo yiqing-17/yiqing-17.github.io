@@ -20,17 +20,17 @@ SITE_URL = "https://yiqing-17.github.io/"
 # 機場：id 要和 data/prices.json 裡的機場 id 相同，也是頁面的檔名（tpe -> tpe.html）
 AIRPORTS = [
     dict(id="tpe", code="TPE", name="桃園機場",
-         title="桃園機場接送價目表｜台北到桃園機場 900 元起｜寰宇機場接送",
+         title="桃園機場接送價目表｜台北到桃園機場 900 元起｜黑桃機場接送",
          description="桃園機場送機、接機價目表：國產轎車、休旅車、九人座商務車與賓士，台北、新北、桃園、新竹、苗栗、台中、宜蘭、南部各地區單趟報價。24 小時接受預約。",
          h1="桃園機場接送價目表",
          intro="送機與接機單趟報價，涵蓋台北、新北、桃園、新竹、苗栗、中部、宜蘭與南部。"),
     dict(id="tsa", code="TSA", name="松山機場",
-         title="松山機場接送價目表｜台北 900 元起｜寰宇機場接送",
+         title="松山機場接送價目表｜台北 900 元起｜黑桃機場接送",
          description="松山機場送機、接機價目表：國產轎車、休旅車、九人座商務車與賓士，台北、新北、桃竹苗、中部、南部與東部各地區單趟報價。24 小時接受預約。",
          h1="松山機場接送價目表",
          intro="松山機場送機與接機單趟報價，接機價為送機價加 100 元。"),
     dict(id="rmq", code="RMQ", name="台中清泉崗機場",
-         title="台中清泉崗機場接送價目表｜台中市區 900 元起｜寰宇機場接送",
+         title="台中清泉崗機場接送價目表｜台中市區 900 元起｜黑桃機場接送",
          description="台中清泉崗機場送機、接機價目表：國產轎車、休旅車、九人座商務車與賓士，台中、彰化、南投、雲林、嘉義與全台各地區單趟報價。24 小時接受預約。",
          h1="台中清泉崗機場接送價目表",
          intro="台中清泉崗機場送機與接機單趟報價，接機價為送機價加 100 元。"),
@@ -52,20 +52,20 @@ NAV = [
 # code 是頁面標題旁邊的大字，intro 是標題下的說明。
 STATIC_PAGES = [
     dict(out="fleet.html", src="fleet.html", code="FLEET", h1="車隊",
-         title="車隊｜轎車、休旅車、九人座商務車｜寰宇機場接送",
-         description="寰宇機場接送的車隊：Toyota Camry、bZ4X、Mercedes-Benz E-Class、Lexus ES、Sienna、Granvia、Staria、Alphard、V-Class、VW Caravelle、Crafter。全部為公司車輛，不拼車、不共乘。",
+         title="車隊｜轎車、休旅車、九人座商務車｜黑桃機場接送",
+         description="黑桃機場接送的車隊：Toyota Camry、bZ4X、Mercedes-Benz E-Class、Lexus ES、Sienna、Granvia、Staria、Alphard、V-Class、VW Caravelle、Crafter。全部為公司車輛，不拼車、不共乘。",
          intro="11 款車型，全部為公司車輛，不拼車、不共乘。"),
     dict(out="terms.html", src="terms.html", code="INFO", h1="服務須知",
-         title="服務須知｜收費、等候與取消規範｜寰宇機場接送",
-         description="寰宇機場接送的重要公告、服務特色與費用須知：24 小時真人客服、LINE@ 預約流程、專車服務聲明，以及安全座椅與停靠點加收、等候費用、取消規範。",
+         title="服務須知｜收費、等候與取消規範｜黑桃機場接送",
+         description="黑桃機場接送的重要公告、服務特色與費用須知：24 小時真人客服、LINE@ 預約流程、專車服務聲明，以及安全座椅與停靠點加收、等候費用、取消規範。",
          intro="重要公告、服務特色，以及收費、等候、取消與搭乘規範。"),
     dict(out="booking.html", src="booking.html", code="BOOK", h1="預約",
-         title="預約｜桃園、松山、清泉崗機場接送｜寰宇機場接送",
-         description="選好機場、地區與車型，填寫乘客資料，用官方 LINE 傳給寰宇機場接送完成預約。24 小時接受預約。",
+         title="預約｜桃園、松山、清泉崗機場接送｜黑桃機場接送",
+         description="選好機場、地區與車型，填寫乘客資料，用官方 LINE 傳給黑桃機場接送完成預約。24 小時接受預約。",
          intro="選好行程、填寫資料，再用官方 LINE 傳給我們。"),
     dict(out="recruit.html", src="recruit.html", code="JOIN", h1="誠徵靠行、租購、長短租司機",
-         title="誠徵靠行、租購、長短租司機｜寰宇機場接送",
-         description="寰宇機場接送誠徵靠行、租購、長短租司機，第一年靠行費優待不收。公司派單、彈性排班，以商務、觀光客為主。",
+         title="誠徵靠行、租購、長短租司機｜黑桃機場接送",
+         description="黑桃機場接送誠徵靠行、租購、長短租司機，第一年靠行費優待不收。公司派單、彈性排班，以商務、觀光客為主。",
          intro="公司派單，不用自己找客人；兼職、全職皆可。"),
 ]
 
@@ -166,7 +166,7 @@ def main():
     out = "index.html"
     write(ROOT / out, render(read(SRC / "pages" / "index.html"), dict(
         base, nav=nav_html(out),
-        title="寰宇機場接送｜桃園機場接送價格最低 900 元起｜台北到桃園機場｜機場包車旅遊",
+        title="黑桃機場接送｜桃園機場接送價格最低 900 元起｜台北到桃園機場｜機場包車旅遊",
         description="提供 24 小時專業接送、商務出差包車與全台九人座旅遊用車。台北至桃園機場最低 900 元起，選好地區與車型馬上看到價格。預約專線：0900-043-688。",
         url=SITE_URL,
     )))
